@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My Django System{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-title">
+            <img src="{% static 'logo.jpg' %}" alt="" class="logo">
+            <div class="system-name">lms</div>
+        </div>
+        <hr>
+        <div class="sidebar-navigation">
+           <a href="{% url 'dashboard' %}">
+               <div class="sidebar-nav-item">
+                  <span>
+                    <i class="fa-solid fa-dashboard"></i> dashboard</span>
+               </div>
+            </a>
+            <a href="{% url 'members' %}">
+               <div class="sidebar-nav-item">
+                  <span><i class="fa-solid fa-users"></i> members</span>
+               </div>
+            </a>
+            <a href="{% url 'books' %}">
+               <div class="sidebar-nav-item">
+                  <span> <i class="fa-solid fa-book"></i> books</span>
+               </div>
+            </a>
+            <a href="{% url 'brower' %}">
+               <div class="sidebar-nav-item">
+                  <span> 
+                    <i class="fa-solid fa-book-reader "></i> brower</span>
+               </div>
+            </a>
+            <a href="{% url 'browedbooks' %}">
+               <div class="sidebar-nav-item">
+                  <span>
+                    <i class="fa-solid fa-book-open "></i> browed books</span>
+               </div>
+            </a>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="header"> {%block header %} {%endblock%}</div>
+        <div class="content">
+         
+         {% block form %}
+         {% endblock %}
+         {% block body %}
+            
+         {% endblock %}
+        </div>
+    </div>
+</body>
+</html>
+<script src="{% static 'js/jquery-3.6.3.js' %}"></script>
+<script>
+    $(document).ready(function () {
+        $('#inputSearch').on('input', function () {
+            let searchvalue = $(this).val();
+            let csrfToken = $('[name=csrfmiddlewaretoken]').val();
+            let urls=""
+            let table=$(this).attr('name')
+            if (table=='searchbook'){
+                 urls="{% url 'searchbook' %}"
+            }
+            if(table=='searchmember'){
+               urls="{% url 'searchmember' %}"
+            }
+            if (searchvalue !== "") {
+                $.post(urls, 
+                    {
+                        q: searchvalue,
+                        csrfmiddlewaretoken: csrfToken
+                    },
+                    function (data, status) {
+                        console.log(data)
+                        $("table").html(data);
+                    });
+            }
+             else {
+                window.location.reload() // Reload the page if input is empty
+            }
+        });
+    });
+</script>
+

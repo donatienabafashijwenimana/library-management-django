@@ -1,0 +1,39 @@
+{# browerform.html #}
+{% extends "brower.html" %}
+{% load static %}
+
+{% block form %}
+<div id="popupForm" class="modal">
+    <div class="modal-content">
+        <a href="{% url 'brower' %}" class="close">&times;</a>
+        <h3>{% block formtitle %} Add new book {% endblock %}</h3>
+         
+        <form method="post">
+             {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                    <small style="color:red;">{{ error }}</small><br>
+                {% endfor %}
+            {% endif %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                <small style="color:red;">{{ field.label }}: {{ error }}</small>
+                {% endfor %}
+            {% endfor %}
+
+            {% csrf_token %}
+            <label for="">Book name:</label>
+            {{ form.book_id }}
+
+            <label for="">Member:</label>
+            {{ form.member_id }}
+
+            <label for="">Borrow Date:</label>
+            {{ form.brow_date }}
+
+            <label for="">Date to Return:</label>
+            {{ form.date_to_return }}
+            <button type="submit">Save</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

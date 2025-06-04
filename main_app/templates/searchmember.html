@@ -1,0 +1,31 @@
+{% if result %}
+<table border="1">
+    <thead>
+        <tr>
+            <th>identity</th>
+            <th>member name</th>
+            <th>gender</th>
+            <th>date of birth</th>
+            <th class="td-action"> action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for data in result %}
+        <tr>
+            <td>{{data.m_nid}}</td>
+            <td>{{data.m_lname|upper}} {{data.m_fname|title}}</td>
+            <td>{{data.m_gender}}</td>
+            <td>{{data.m_dob}}</td>
+            <td class="td-action">
+                <a href="{% url 'updatemember' data.id %}"><button class="update-button">update</button></a>
+                <a href="{% url 'deletemember' data.id%}"><button class="delete-button">delete</button></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="noresult">
+    No result
+</div>
+{% endif %}

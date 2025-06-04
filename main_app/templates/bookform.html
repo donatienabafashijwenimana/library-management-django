@@ -1,0 +1,31 @@
+{% extends "books.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+{% block form %}
+<div id="popupForm" class="modal">
+    <div class="modal-content">
+        <a href="{% url 'books' %}" class="close" >&times;</a>
+        <h3> {% block formtitle %} Add new book {% endblock %}</h3>
+        <form method="post">
+            {% csrf_token %}
+            <label for="">book name:</label>
+            {{form.book_name}}
+            <label for="">author:</label>
+            {{form.author}}
+            <label for="">description:</label>
+            {{form.description}}
+            <button type="submit">save</button>
+        </form>
+    </div>
+</div>
+{% endblock %} 
+</html>
+

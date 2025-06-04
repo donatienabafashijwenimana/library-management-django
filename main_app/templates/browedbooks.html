@@ -1,0 +1,56 @@
+{%extends 'base.html'%}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% block title %}browed books{% endblock %}
+        <link rel="stylesheet" href="{% static 'css/tyle.css' %}">
+    </head>
+    <div>
+        {% block header %}browed books {% endblock %}
+        {% block body %}
+            <div class="table-title">
+                <h5>view browed books</h5>
+                <div class="left-header">
+                    filter by:
+                    <select name="filter" class="search-input">
+                        <option value="all">All books</option>
+                        <option value="Return">Returne books</option>
+                        <option value="Non return">Non returned books</option>
+                    </select>
+                </div>
+            </div>
+            <a href=""><button class="add-new">print</button></a>
+            
+            <table border="1">
+                <tr>
+                    
+                    <th>book name</th>
+                    <th>brower name</th>
+                    <th>browed on</th>
+                    <th>return on</th>
+                    <th>yes/no</th>
+                </tr>
+                <tr>
+                    <td style="color: red;">python</td>
+                    <td>abafashijwenimana donatien</td>
+                    <td>1/1/2025</td>
+                    <td>14/4/2025</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td>java script</td>
+                    <td>frolence uwamaliya</td>
+                    <td>1/1/2025</td>
+                    <td>21/5/2025</td>
+                    <td>No</td>
+                </tr>
+                
+            </table>
+    
+        {% endblock %}
+        
+    </div>
+  

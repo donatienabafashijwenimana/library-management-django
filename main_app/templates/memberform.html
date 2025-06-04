@@ -1,0 +1,38 @@
+{% extends "members.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+</head>
+{% block form %}
+<div id="popupForm" class="modal">
+    <div class="modal-content">
+        <a href="{% url 'members' %}" class="close" >&times;</a>
+        <h3> {% block formtitle %} add member {% endblock %}</h3>
+        <form method="post">
+            {% csrf_token %}
+            <label for="">national id:</label>
+            {{form.m_nid}}
+            <label for="">first name:</label>
+            {{form.m_fname}}
+            <label for="">last name:</label>
+            {{form.m_lname}}
+            <label for="">phone number:</label>
+            {{form.p_number}}
+            <label for="">gender:</label>
+            {{form.m_gender}}
+            <label for="">date of birth:</label>
+            {{form.m_dob}}
+            <button type="submit">save</button>
+        </form>
+    </div>
+</div>
+{% endblock %} 
+</body>
+</html>

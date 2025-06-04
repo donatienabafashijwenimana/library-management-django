@@ -1,0 +1,72 @@
+{%extends 'base.html'%}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% block title %}brower{% endblock %}
+        <link rel="stylesheet" href="{% static 'css/tyle.css' %}">
+    </head>
+    <div>
+        {% block header %}<i class="fa-solid fa-book-reader "></i>brower {% endblock %}
+        {% block body %}
+            <div class="table-title">
+                <h5><i class="fa-solid fa-book-reader "></i> manage brower</h5>
+                <div class="search-wrapper">
+                <i class="fa fa-search"></i>
+                <input type="search" id="inputSearch" name="searchbook" class="search-input" placeholder="Search...">
+            </div>
+            </div>
+            <button onclick="window.location.href='{% url 'addbrower' %}'" class="add-new">
+               <i class="fa fa-plus"></i>add brower</button>
+            
+                        <table border="1">
+                <tr>
+                    <th width="30">#</th>
+                    <th>brower name</th>
+                    <th width="130">book</th>
+                    <th width="130">brow date</th>
+                    <th width="130">retun date</th>
+                    <th width="110">Returned on</th>
+                    <th width="215" class="td-action"> action</th>
+                </tr>
+                <tbody>
+                    {% for data in result %}
+                    <tr>
+                        <td width="30">{{forloop.counter}}</td>
+                        <td>{{data.member_id.m_lname|upper}} {{data.member_id.m_fname|title}}</td>
+                        <td width="130">{{data.book_id.book_name}}</td>
+                        <td width="130">{{data.brow_date}}</td>
+                        <td width="130">{{data.date_to_return}}</td>
+                        <td width="110">{{data.returned_on}}</td>
+                        <td width="215" class="td-action">
+                            <a href="{% url 'updatebrower' data.id %}">
+                                <button style="width:30%;" class="update-button">
+                                <i class="fa fa-edit"></i>update</button>
+                            </a>
+                            {% if data.returned_on %}
+                            <a href="{% url 'browerreturn' data.id %}">
+                                <button style="width:30%; background-color:rgba(3, 3, 196, 0.479);" class="return-button">
+                                    <i class="fa fa-check-circle"> </i> returned</button>
+                            </a>
+                            {% else %}
+                            <a href="{% url 'browerreturn' data.id %}">
+                                <button style="width:30%;" class="return-button">
+                                    <i class="fa fa-rotate-left"></i>return</button>
+                            </a>
+                            {% endif %}
+                            <a href="{% url 'deletebrower' data.id %}">
+                                <button style="width:30%;" class="delete-button">
+                                    <i class="fa fa-trash"></i>delete</button>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    
+        {% endblock %}
+        
+    </div>
+  

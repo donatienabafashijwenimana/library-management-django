@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Members{% endblock %}
+
+{% block header %}
+    <i class="fa-solid fa-users"></i> Members
+{% endblock %}
+
+{% block body %}
+    <form class="table-title">
+        {% csrf_token %}
+        <h5><i class="fa-solid fa-user-gear"></i> Manage Members ({{ result|length }})</h5>
+        <div class="search-wrapper">
+            <i class="fa fa-search"></i>
+            <input type="search" id="inputSearch" name="searchbook" class="search-input" placeholder="Search...">
+        </div>
+    </form>
+
+    <button class="add-new" onclick="window.location.href='{% url 'addmember' %}'">
+        <i class="fa-solid fa-user-plus"></i> Add Member
+    </button>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th width="30">#</th>
+                <th>Identity</th>
+                <th>Member Name</th>
+                <th width="130">Phone Number</th>
+                <th width="70">Gender</th>
+                <th width="130">Date of Birth</th>
+                <th class="td-action" width="160">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in result %}
+            <tr>
+                <td width="30">{{ forloop.counter }}</td>
+                <td>{{ data.m_nid }}</td>
+                <td>{{ data.m_lname|upper }} {{ data.m_fname|title }}</td>
+                <td  width="130">{{ data.p_number }}</td>
+                <td width="70">{{ data.m_gender }}</td>
+                <td width="130">{{ data.m_dob }}</td>
+                <td width="145" class="td-action">
+                    <a href="{% url 'updatemember' data.id %}">
+                        <button class="update-button">
+                            <i class="fa-solid fa-pen-to-square"></i>Update
+                        </button>
+                    </a>
+                    <a href="{% url 'deletemember' data.id %}">
+                        <button class="delete-button">
+                            <i class="fa-solid fa-trash"></i>Delete
+                        </button>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

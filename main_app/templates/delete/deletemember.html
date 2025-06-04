@@ -1,0 +1,32 @@
+{% extends "../members.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    {%block form %}
+        <div id="popupForm" class="modal">
+            <div class="modal-content">
+                <form method="post">
+                    {% csrf_token %}
+                    <h2 style="color: black;">do you want to delete member: <br>
+                        <span style="font-size:18px;color:blue;
+                              font-family:Arial, Helvetica, sans-serif">
+                            {{object.m_lname|upper}} {{object.m_fname|title}}
+                        </span>
+                    </h2>
+                    <input type="submit" value="Yes" class="update-button">
+                    <a href="{% url 'members' %}" >
+                        <div class="confirm-no"> No </div>
+                    </a>
+                </form> 
+            </div>
+        </div>
+    {% endblock %}
+</body>
+</html>

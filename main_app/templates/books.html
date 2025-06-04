@@ -1,0 +1,62 @@
+{%extends 'base.html'%}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% block title %}profile{% endblock %}
+        <link rel="stylesheet" href="{% static 'css/tyle.css' %}">
+    </head>
+    <div>
+        {% block header %}<i class="fa fa-book"></i>books {% endblock %}
+        {% block body %}
+            <form method="post" class="table-title">
+                {% csrf_token %}
+                <h5><i class="fa fa-book"></i>manage books ({{result|length}})</h5>
+                
+                <div class="search-wrapper">
+                    <i class="fa fa-search"></i>
+                    <input type="search" id="inputSearch" name="searchbook" class="search-input" placeholder="Search...">
+                </div>
+            </form>
+            <button class="add-new" onclick="window.location.href='{% url 'addbook' %}'" >
+                <i class="fa-solid fa-plus"></i> add book</button>
+            
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th width="30">#</th>
+                        <th>book name</th>
+                        <th>author</th>
+                        <th>description</th>
+                        <th width="140" class="td-action"> action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in result %}
+                    <tr>
+                        <td width="30">{{ forloop.counter }}</td>
+                        <td>{{ data.book_name }}</td>
+                        <td>{{ data.author }}</td>
+                        <td>{{ data.description }}</td>
+                        <td width="140" class="td-action">
+                            <a href="{% url 'updatebook' data.id %}">
+                                <button class="update-button"><i class="fa-solid fa-edit"></i>edit</button>
+                            </a>
+                            <a href="{% url 'deletebook' data.id %}">
+                                <button class="delete-button"> <i class="fa-solid fa-trash"></i>delete</button>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+    
+        {% endblock %}
+        
+    </div>
+
+
+  
